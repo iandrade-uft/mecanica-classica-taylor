@@ -1,0 +1,30 @@
+---
+title: "Título"
+author: "Igo da Costa Andrade"
+
+# Metadados
+booktitle: "Mecânica Clássica"
+#booksubtitle: "Subtítulo do Livro"
+bookauthors: "Taylor, J. R."
+bookaddres: "Porto Alegre"
+bookpublisher: "Bookman"
+bookyear: "2013"
+chaptertitle: "Leis de Newton do Movimento"
+chapternumber: "1"
+maincolor: "dc2531"
+
+output: 
+  bookdown::pdf_document2:
+    template: template.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+use_python("~/anaconda3/envs/science/bin/python")
+```
+
+\begin{enumerate}
+  \item Dados dois vetores 
+  
+\end{enumerate}
