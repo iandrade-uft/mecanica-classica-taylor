@@ -22,6 +22,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
 use_python("~/anaconda3/envs/science/bin/python")
+# Funções auxiliares
+fmt <- function(x, n=2, decimal.mark=",", big.mark=".", scientific=FALSE) {
+  result <- format(round(x, n), decimal.mark=decimal.mark, big.mark=big.mark, scientific=scientific)
+  return(result)
+}
 ```
 
 \section*{PROBLEMAS}
@@ -125,4 +130,97 @@ use_python("~/anaconda3/envs/science/bin/python")
     r^2 = x^2 +y^2 + z^2.
     $$
   \fimSol
+  %%%%
+  \item Um dos muitos usos do produto escalar é na determinação do ângulo entre dois vetores dados. Determine o ângulo entre os vetores $\vet{b} = (1,2,4)$ e $\vet{c} = (4,2,1)$ através do cálculo do produto escalar entre eles.\\
+  \iniSol
+```{r, include=FALSE}
+n <- 51
+p <- seq(from=0, to=1, length=n)
+b <- c(1,2,4); c <- c(4,2,1)
+b_uni <- b/sqrt(sum(b^2)); c_uni <- c/sqrt(sum(c^2))
+
+arc <- "\\draw[fill=gray, fill opacity=0.4]  (0,0,0)"
+
+for (i in 1:n) {
+  a <- p[i]*b_uni + (1-p[i])*c_uni
+  a <- 1.5*a/sqrt(sum(a^2))
+  arc = sprintf("%s -- (%.2f, %.2f, %.2f)", arc, a[1], a[2], a[3])
+}
+arc <- sprintf("%s -- (0,0,0) --  cycle;", arc)
+a <- 0.5*(b_uni+c_uni)
+theta <- (180/pi) * acos(sum(b*c)/( sqrt(sum(b^2)) * sqrt(sum(c^2)))) 
+arc <- sprintf("%s\\node[right, xshift=5pt] at (%.2f, %.2f, %.2f) {$ %s ^\\circ$};", arc, a[1], a[2], a[3], fmt(theta, n=1))
+```
+    \begin{align*}
+      \vet{b} \cdot \vet{c} = b c \cos{\theta} &\Rightarrow \cos{\theta} = \dfrac{\vet{b} \cdot \vet{c}}{bc} = \dfrac{1 \cdot 4 + 2 \cdot 2 + 4 \cdot 1}{\sqrt{1^2 + 2^2 + 4^2} \sqrt{4^2 + 2^2 + 1^2}}\\
+      &\Rightarrow \cos{\theta} = \dfrac{`r sum(b*c)`}{\sqrt{`r sum(b^2)`} \sqrt{`r sum(c^2)`}} = \dfrac{`r sum(b*c)`}{`r sum(b^2)`} = \dfrac{`r sum(b*c)/3`}{`r sqrt(sum(b^2)) * sqrt(sum(c^2))/3`}\\
+      &\Rightarrow \theta = \arccos{\left(\dfrac{`r sum(b*c)/3`}{`r sqrt(sum(b^2)) * sqrt(sum(c^2))/3`}\right)} = `r fmt(theta, n=1)`^\circ
+    \end{align*}
+    %%%%
+    \begin{figure}[H]
+      \centering
+      \tdplotsetmaincoords{60}{105}
+      \begin{tikzpicture}[tdplot_main_coords]
+        \draw[-latex] (0,0,0) -- (5, 0, 0) node[left] {$x$}; 
+        \draw[-latex] (0,0,0) -- (0, 5, 0) node[above] {$y$};
+        \draw[-latex] (0,0,0) -- (0, 0, 5) node[above] {$z$};
+        \draw[-latex, thick, red] (0,0,0) -- (1, 2, 4) node [right] {$\vet{b}$};
+        \draw[-latex, thick, blue] (0,0,0) -- (4, 2, 1) node [right] {$\vet{c}$};
+        \draw[dashed, red] (1, 0, 0) node[left, black] {$1$} -- (1, 2, 0) -- (0, 2, 0) node[above, black] {$2$} (1, 2, 0) -- (1, 2, 4) -- (0, 0, 4) node[left, black] {$4$} (0,0,0) -- (1,2,0);
+        \draw[dashed, blue] (4, 0, 0) node[left, black] {$4$} -- (4, 2, 0) -- (0, 2, 0) (4, 2, 0) -- (4,2, 1) -- (0, 0, 1) node[left, black] {$1$} (0,0,0) -- (4, 2, 0);
+        `r arc`
+      \end{tikzpicture}
+    \end{figure}
+  \fimSol
+  %%%%
+  \item Determine o ângulo entre a diagonal do corpo de um cubo e qualquer das diagonais de suas faces. [\textit{Sugestão}: escolha um cubo de lado 1 e com um dos vértices em $O$ e o vértice oposto $(1,1,1)$. Escreva o vetor que representa uma diagonal do corpo e o outro que represente a diagonal de uma face, e então determine o ângulo entre elas conforme o Problema 1.4.]\\
+  \iniSol
+```{r, include=FALSE}
+u <- c(1,1,1)
+v <- c(1,1,0)
+theta <- (180/pi) * acos(sum(u*v) / (sqrt(sum(u*u) * sum(v*v))))
+u_uni <- u/sqrt(sum(u^2))
+v_uni <- v/sqrt(sum(v^2))
+n <- 51
+p <- seq(from=0, to=1, length=n)
+arc <- "\\draw[fill=gray, fill opacity=0.4] (0,0,0) "
+for (i in 1:n) {
+  a <- 1.5*(p[i]*u_uni + (1-p[i])*v_uni)
+  arc <- sprintf("%s -- (%.4f, %.4f, %.4f)", arc, a[1], a[2], a[3])
+}
+a <- 1.5 * (0.5 * (u_uni+v_uni))
+arc <- sprintf("%s -- cycle;\\node[below, xshift=25pt, yshift=-12pt, rotate=-10] at (%.4f, %.4f, %.4f) {$\\theta = %s^\\circ$};", arc, a[1], a[2], a[2], fmt(theta, n=1))
+```
+  Sem perda de generalizade, consideremos os vetores $\vet{u} = (1,1,1)$ e $\vet{v} = (1,1,0)$, tais que:
+  \begin{align*}
+    \begin{cases}
+      u = |\vet{u}| = \sqrt{`r knitr::combine_words(u, before="", after="^2", and="", sep="+")`} = \sqrt{`r sum(u)`}\\
+      v = |\vet{v}| = \sqrt{`r knitr::combine_words(v, before="", after="^2", and="", sep="+")`} = \sqrt{`r sum(v)`}
+    \end{cases}
+  \end{align*}
+  Então,
+  \begin{align*}
+    \vet{u} \cdot \vet{v} = u v \cos{\theta} &\Rightarrow \cos{\theta} = \dfrac{\vet{u} \cdot \vet{v}}{u v} = \dfrac{`r knitr::combine_words(paste(u, v, sep=" \\cdot "), sep=" + ", and="")`}{\sqrt{`r sum(u)`} \cdot \sqrt{`r sum(v)`}}\\
+    &\Rightarrow \cos{\theta} = \dfrac{`r sum(u*v)`}{\sqrt{`r sum(u) * sum(v)`}} = \dfrac{`r sum(u*v)` \sqrt{`r sum(u) * sum(v)`} }{`r sum(u) * sum(v)`}\\
+    &\Rightarrow \theta = \arccos{\left(\dfrac{`r sum(u*v)` \sqrt{`r sum(u) * sum(v)`} }{`r sum(u) * sum(v)`}\right)} = `r fmt(theta, n=1)`^\circ
+  \end{align*}
+  \begin{figure}[H]
+    \centering
+    \tdplotsetmaincoords{60}{105}
+    \begin{tikzpicture}[tdplot_main_coords]
+        \draw[-latex] (0,0,0) -- (5, 0, 0) node[left] {$x$}; 
+        \draw[-latex] (0,0,0) -- (0, 5, 0) node[above] {$y$};
+        \draw[-latex] (0,0,0) -- (0, 0, 5) node[above] {$z$};
+        \draw[dashed] (4, 0, 0) node[left] {$1$} -- (4, 4, 0) -- (0, 4, 0) node[above, xshift=5pt] {$1$};
+        \draw[dashed] (4, 0, 4) -- (4,4,4) -- (0, 4, 4) -- (0, 0, 4) node[left] {$1$} -- (4, 0, 4) -- cycle;
+        \draw[dashed] (4, 0, 0) -- (4, 0, 4);
+        \draw[dashed] (4, 4, 0) -- (4, 4, 4);
+        \draw[dashed] (0, 4, 0) -- (0, 4, 4);
+        \draw[-latex, thick] (0,0,0) -- (4,4,4) node[midway, above] {$\vet{u}$};
+        \draw[-latex, thick] (0,0,0) -- (4,4,0) node[midway, left, xshift=-5pt] {$\vet{v}$};
+        `r arc`
+    \end{tikzpicture}
+  \end{figure}
+  \fimSol
 \end{enumerate}
+
