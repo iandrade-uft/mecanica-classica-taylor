@@ -222,5 +222,131 @@ arc <- sprintf("%s -- cycle;\\node[below, xshift=25pt, yshift=-12pt, rotate=-10]
     \end{tikzpicture}
   \end{figure}
   \fimSol
+  %%%%
+  \item Utilizando o produto escalar, determine os valores do escalar $s$ para os quais os vetores $\vet{b} = \ux + s\uy$ e $\vet{c} = \ux - s \uy$ são ortogonais. (Lembre-se de que dois vetores são ortogonais se e somente se o produto escalar entre eles é zero.) Explique sua resposta esboçando um gráfico.\\
+    \iniSol
+    \begin{align*}
+      \vet{b} \cdot \vet{c} = 0 &\Rightarrow (\ux + s\uy) \cdot (\ux - s\uy) = 0 \Rightarrow 1 - s^2 = 0 \Rightarrow s^2 = 1 \Rightarrow s = \pm 1\\
+      &\Rightarrow 
+      \begin{cases}
+        \vet{b} = \ux \pm \uy\\
+        \vet{c} = \ux \mp \uy
+      \end{cases}
+    \end{align*}
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[scale=2]
+        \node (A) at (0,0) {};
+        \draw[-latex] (A) ++ (-0.25,0) -- ++(1.75, 0) node[above] {$x$}; 
+        \draw[-latex] (A) ++ (0,-1.5) -- ++(0, 3) node[above] {$y$};
+        \draw[-latex, thick] (A) -- ++(1,1) node[right] {$\vet{b}$};
+        \draw[-latex, thick] (A) -- ++(1,-1) node[right] {$\vet{c}$};
+        \draw[fill=gray!25!white, rotate=-45] (A) rectangle ++(0.25, 0.25);
+        \filldraw (A) ++(`r 0.25*sqrt(2)/2`, 0) circle (1pt);
+        \draw[dashed] (A) ++(0, -1) node[left] {$-1$} -- ++(1, 0) -- ++(0, 1) node[below, fill=white, yshift=-2pt] {$1$} -- ++(0,1) -- ++(-1, 0) node [left] {$1$};
+        \draw (A) ++(0, 2) node[right] {Caso I};
+        %%
+        \node (B) at (3,0) {};
+        \draw[-latex] (B) ++ (-0.25,0) -- ++(1.75, 0) node[above] {$x$}; 
+        \draw[-latex] (B) ++ (0,-1.5) -- ++(0, 3) node[above] {$y$};
+        \draw[-latex, thick] (B) -- ++(1,1) node[right] {$\vet{c}$};
+        \draw[-latex, thick] (B) -- ++(1,-1) node[right] {$\vet{b}$};
+        \draw[fill=gray!25!white, rotate=-45] (B) rectangle ++(0.25, 0.25);
+        \filldraw (B) ++(`r 0.25*sqrt(2)/2`, 0) circle (1pt);
+        \draw[dashed] (B) ++(0, -1) node[left] {$-1$} -- ++(1, 0) -- ++(0, 1) node[below, fill=white, yshift=-2pt] {$1$} -- ++(0,1) -- ++(-1, 0) node [left] {$1$};
+        \draw (B) ++(0, 2) node[right] {Caso II};
+      \end{tikzpicture}
+    \end{figure}
+  \fimSol
+  %%%%
+  \item Mostre que as duas defnições do produto escalar $\vet{r} \cdot \vet{s}$ como $r s \cos{\theta}$ (1.6) e $\sum r_i s_i$ (1.7) são iguais. Uma maneira de mostrar é escolher o eixo $x$ ao longo da direção $\vet{r}$. [Estritamente falando, voccê deve primeiro se assegurar de que a definição (1.7) é independente da escolha dos eixos. Se você gosta de dar atenção a essas sutilezas, veja o Problema 1.16.]\\
+  \iniSol
+    Sem perda de generalidade, consideremos o plano $xy$ definido como o plano formado pelos vetores $\vet{r}$ e $\vet{s}$, e tal que o eixo $x$ aponta na mesma direção do vetor $\vet{r}$, como mostrado na figura abaixo:
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}
+        \draw[-latex] (-0.5, 0) -- (5, 0) node[above] {$x$};
+        \draw[-latex] (0, -0.5) -- (0, 3.5) node[left] {$y$};
+        \draw[-latex, thick] (0,0) -- (4, 0) node[above] {$\vet{r}$} node[below] {r};
+        \draw[-latex, thick] (0,0) -- (60:3) node[above] {$\vet{s}$};
+        \draw[fill=gray, fill opacity=0.4] (0,0) -- (1, 0) arc (0:60:1) node[midway, right, color=black, opacity=1] {$\theta$} -- (0,0) -- cycle;
+        \draw[dashed] (`r 3*cos(pi/3)`, 0) node[below] {$s_x$} -- (`r 3*cos(pi/3)`, `r 3*sin(pi/3)`) -- (0, `r 3*sin(pi/3)`)  node[left] {$s_y$};
+      \end{tikzpicture}
+    \end{figure}
+    Então, aplicando a definição (1.7) para o produto escalar, temos:
+    \begin{align*}
+      \vet{r} \cdot \vet{s} = (r\ux + 0 \uy) \cdot (s_x \ux + s_y \uy) = r s_x = r s \cos{\theta}
+    \end{align*}
+    que corresponde à definição (1.6) do produto escalar. Portanto, as definições (1.6) e (1.7) para o produto escalar são equivalentes.
+  \fimSol
+  %%%%
+  \item 
+  \begin{enumerate}[label=(\alph*)]
+    \item Use a definição (1.7) para mostrar que o produto escalar é distributivo, isto é, $\vet{r} \cdot (\vet{u} + \vet{v}) = \vet{r} \cdot \vet{u} + \vet{r} \cdot \vet{v}$.
+    \iniSol
+      Sejam os vetores:
+      \begin{align*}
+        &\vet{r} = r_x \ux + r_y \uy + r_z \uz\\
+        &\vet{u} = u_x \ux + u_y \uy + u_z \uz\\
+        &\vet{v} = v_x \ux + v_y \uy + v_z \uz
+      \end{align*}
+      Então,
+      \begin{align*}
+        \vet{r} \cdot (\vet{u} + \vet{v}) &= (r_x \ux + r_y \uy + r_z \uz) \cdot \left[(u_x \ux + u_y \uy + u_z \uz) + (v_x \ux + v_y \uy + v_z \uz)\right]\\
+        &= (r_x \ux + r_y \uy + r_z \uz) \cdot \left[ (u_x + v_x)\ux + (u_y + v_y)\uy + (u_z+v_z)\uz \right]\\
+        &= r_x (u_x + v_x) + r_x (u_x + v_y) + r_z (u_z + v_z)\\
+        &= r_x u_x + r_x v_x + r_y u_y + r_y v_y + r_z u_z + r_z v_z \\
+        &= (r_x u_x + r_y u_y + r_z u_z) + (r_x v_x + r_y v_y + r_z v_z)\\
+        &= \vet{r} \cdot \vet{u} + \vet{r} \cdot \vet{v}
+      \end{align*}
+    \fimSol
+    \item Se $\vet{r}$ e $vet{s}$ são vetores que dependem do tempo, mostre que a regra do produto para derivação de produtos se aplica a $\vet{r} \cdot \vet{s}$, ou seja, que $$\dfrac{d}{dt} (\vet{r} \cdot \vet{s}) = \vet{r} \cdot \dfrac{d\vet{s}}{dt} + \dfrac{d\vet{r}}{dt} \cdot \vet{s}.$$
+    \iniSol
+      Sejam os vetores $\vet{r} = r_x \ux + r_y \uy + r_z \uz$ e $\vet{s} = s_x \ux + s_y \uy + s_z \uz$, então:
+      \begin{align*}
+        \dfrac{d}{dt} (\vet{r} \cdot \vet{s}) &= \dfrac{d}{dt} (r_x s_x + r_y s_y + r_z s_z) = \dfrac{d}{dt} (r_x s_x) + \dfrac{d}{dt} (r_y s_y )  + \dfrac{d}{dt} (r_z s_z ) \\
+        &= r_x \dfrac{ds_x}{dt} + \dfrac{dr_x}{dt} s_x + r_y \dfrac{ds_y}{dt} + \dfrac{dr_y}{dt} s_y + r_z \dfrac{ds_z}{dt} + \dfrac{dr_z}{dt} s_z\\
+        &= \left( r_x \dfrac{ds_x}{dt} + r_y \dfrac{ds_y}{dt} + r_z \dfrac{ds_z}{dt} \right) + \left( \dfrac{dr_x}{dt} s_x + \dfrac{dr_y}{dt} s_y + \dfrac{dr_z}{dt} s_z \right)\\
+        &= \vet{r} \cdot \dfrac{d\vet{s}}{dt} + \dfrac{d\vet{r}}{dt} \cdot \vet{s}
+      \end{align*}
+    \fimSol
+  \end{enumerate}
+  %%%%
+  \item Em trigonometria elementar, você provavelmente aprendeu a lei dos cossenos para um triângulo de lados $a$, $b$ e $c$, tal que $c^2 = a^2 + b^2 - 2ab \cos{\theta}$, onde $\theta$ é o ângulo entre os lados $a$ e $b$. Mostre que a lei dos cossenos é uma consequência imediata da identidade $(\vet{a} + \vet{b})^2 = a^2 + b^2 + 2 \vet{a} \cdot \vet{b}$.\\
+  \iniSol
+    Sejam os vetores $\vet{a}$ e $\vet{b}$, cujos comprimentos valem, respectivamente, $a = \sqrt{\vet{a} \cdot \vet{a}}$ e $b = \sqrt{\vet{b} \cdot \vet{b}}$. Temos:
+    \begin{align*}
+      (\vet{a}+\vet{b})^2 &= (\vet{a}+\vet{b}) \cdot (\vet{a}+\vet{b}) = \vet{a} \cdot \vet{a} + \vet{a} \cdot \vet{b} + \vet{b} \cdot \vet{a} + \vet{b} \cdot \vet{b}\\
+      &= \vet{a} \cdot \vet{a} + \vet{a} \cdot \vet{b} + \vet{a} \cdot \vet{b} + \vet{b} \cdot \vet{b}\\
+      &= \vet{a} \cdot \vet{a} + 2 \vet{a} \cdot \vet{v} + \vet{b} \cdot \vet{b}\\
+      &= \vet{a} \cdot \vet{a} + \vet{b} \cdot \vet{b} + 2 \vet{a} \cdot \vet{b}\\
+      &= a^2 + b^2 + 2 \vet{a} \cdot \vet{b}\\
+      &= a^2 + b^2 + 2 a b \cos{(180-\theta)}\\
+      &= a^2 + b^2 - 2 a b \cos{\theta}
+    \end{align*}
+```{r, include=FALSE}
+delta <- 20
+a <- c(6, 0)
+b <- c(3, 3)
+theta_c <- acos(sum(a*b) / (sqrt(sum(a^2)) * sqrt(sum(b^2)))) * (180/pi)
+theta <- 180 - theta_c
+c <- a + b
+beta <- acos(sum(a*c) / (sqrt(sum(a^2)) * sqrt(sum(c^2)))) * (180/pi)
+```
+onde $180^\circ - \theta$ é o ângulo entre os vetores $\vet{a}$ e $\vet{b}$, conforme mostrado na  figura abaixo:
+
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[rotate=`r delta`]
+        \draw[-latex, thick] (0,0) -- (`r a`) node[midway, below] {$\vet{a}$};
+        \draw[-latex, thick] (`r a`) -- (`r c`) node[midway, left] {$\vet{b}$};
+        \draw[-latex, thick] (0,0) -- (`r c`) node[midway, above, rotate=`r beta + delta`] {$\vet{a} + \vet{b}$};
+        \draw[dashed] (0,0) -- (`r b`) -- (`r c`);
+        \draw[dashed] (`r a`) -- ++(3, 0);
+        \draw[latex-latex] (`r a`) ++ (1, 0) arc (0:`r theta_c`:1) node[midway, right, rotate=`r delta`] {$180^\circ - \theta$};
+        \draw[latex-latex] (`r a`) ++ (`r b/sqrt(sum(b^2))`) arc (`r theta_c`:180:1) node[midway, above] {$\theta$};
+      \end{tikzpicture}
+    \end{figure}
+  \fimSol
 \end{enumerate}
 
