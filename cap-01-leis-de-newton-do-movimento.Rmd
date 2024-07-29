@@ -29,5 +29,65 @@ use_python("~/anaconda3/envs/science/bin/python")
 \subsection*{Seção 1.2 Espaço e Tempo}
 
 \begin{enumerate}
-  \item Dados dois vetores $\vet{v} = \ux + \uy$ e $\vet{c} = \ux + \uz$, determine $\vet{b} + \vet{c}$, $5\vet{b} + 2\vet{c}$, $\vet{b} \cdot \vet{c}$ e $\vet{b} \times \vet{c}$.
+  \item Dados dois vetores $\vet{v} = \ux + \uy$ e $\vet{c} = \ux + \uz$, determine $\vet{b} + \vet{c}$, $5\vet{b} + 2\vet{c}$, $\vet{b} \cdot \vet{c}$ e $\vet{b} \times \vet{c}$.\\
+  \iniSol
+    \begin{small}
+    \begin{align*}
+      \vet{b} + \vet{c} &= (\ux + \uy) + (\ux + \uz) = \ux + \uy  + \ux + \uz = 2\ux + \uy + \uz\\
+      5\vet{b} + 2\vet{c} &= 5 (\ux + \uy) + 2(\ux + \uz) = 5\ux + 5\uy + 2\ux + 2\uz = 7\ux + 5\uy + 2\uz\\
+      \vet{b} \cdot \vet{c} &= (\ux + \uy) \cdot (\ux + \uz) = \ux \cdot \ux + \ux \cdot \uz + \uy \cdot \ux + \uy \cdot \uz = 1 + 0 + 0 + 0 = 1\\
+      \vet{b} \times \vet{c} &= 
+      \begin{vmatrix}
+        \ux & \uy & \uz\\
+        1 & 1 & 0\\
+        1 & 0 & 1
+      \end{vmatrix} = 
+      \ux \begin{vmatrix}
+        1 & 0\\
+        0 & 1
+      \end{vmatrix} -
+      \uy \begin{vmatrix}
+        1 & 0\\
+        1 & 1
+      \end{vmatrix} + 
+      \uz \begin{vmatrix}
+        1 & 1\\
+        1 & 0
+      \end{vmatrix}
+      \\
+      &= \ux (1 \cdot 1 - 0 \cdot 0) - \uy (1 \cdot 1 - 1 \cdot 0) + \uz (1 \cdot 0 - 1 \cdot 1) = \ux - \uy - \uz
+    \end{align*}
+    \end{small}
+  \fimSol
+  %%%%
+  \item Dois vetores são dados como $\vet{b} = (1,2,3)$ e $\vet{c} = (3, 2, 1)$. (Lembre-se de que essas declarações são uma forma compacta de fornacer as componentes dos vetores.) Determine $\vet{b} + \vet{c}$, $5\vet{b} + 2\vet{c}$, $\vet{b} \cdot \vet{c}$ e $\vet{b} \times \vet{c}$.\\
+  \iniSol
+    \begin{small}
+    \begin{align*}
+      \vet{b} + \vet{c} &= (1+3, 2+2, 3+1) = (4, 4, 4) = 2\ux + 4\uy + 4\uz\\
+      5\vet{b} + 2\vet{c} &= (5\cdot 1+ 2 \cdot 3, 5\cdot 2+ 2 \cdot 2, 5\cdot 3+ 2 \cdot 1) = (5+6, 10+4, 15+2) = (11, 14,17) = 11\ux + 14\uy + 17\uz\\
+      \vet{b} \cdot \vet{c} &= 1 \cdot 3 + 2 \cdot 2 + 3 \cdot 1 = 3 + 4 + 3 = 10\\
+      \vet{b} \times \vet{c} &= 
+      \begin{vmatrix}
+        \ux & \uy & \uz\\
+        1 & 2 & 3\\
+        3 & 2 & 1
+      \end{vmatrix}
+      = \ux \begin{vmatrix}
+      2 & 3\\
+      2 & 1
+      \end{vmatrix}
+      - \uy \begin{vmatrix}
+        1 & 3\\
+        3 & 1
+      \end{vmatrix}
+      + \uz \begin{vmatrix}
+        1 & 2\\
+        3 & 2
+      \end{vmatrix}
+      \\ &= \ux (2 \cdot 1 - 2 \cdot 3) - \uy (1 \cdot 1 - 3 \cdot 3) + \uz (1 \cdot 2 - 3 \cdot 2) = -4\ux + 8\uy -4\uz
+    \end{align*}
+    \end{small}
+  \fimSol
+  %%%%
 \end{enumerate}
