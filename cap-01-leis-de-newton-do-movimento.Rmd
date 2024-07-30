@@ -348,5 +348,203 @@ onde $180^\circ - \theta$ é o ângulo entre os vetores $\vet{a}$ e $\vet{b}$, c
       \end{tikzpicture}
     \end{figure}
   \fimSol
+  %%%%
+  \item Uma partícula se move em um círculo (centro $O$ e raio $R$) com velocidade angular constante $\omega$, no sentido contrário aos ponteiros de um relógio. O círculo está sobre o plano $xy$ e a partícula está sobre o eixo $x$ no instante $t = 0$. Mostre que a posição da partícula é dada por
+  $$
+  \vet{r}(t) = \ux R \cos{(\omega t)} + \uy R \sin{(\omega t)}  .
+  $$
+  Determine a velocidade e a aceleração da particulo. Quais são as magnitudes e a direção da aceleração? Relacione seu resultado com as propriedades bem conhecidas do movimento circular uniforme.\\
+  \iniSol
+```{python, include=FALSE}
+import math
+R = 3
+omega = math.pi/5
+t = 3/2
+x, y = R * math.cos(omega * t), R * math.sin(omega * t)
+vx, vy = -omega * R * math.sin(omega * t), omega * R * math.cos(omega * t)
+ax, ay = -omega**2 * x, -omega**2 * y
+theta_deg = math.degrees(omega * t) 
+```
+
+Num dado instante $t$ arbitrário, a posição da partícula na trajetória circular é a mostrada na figura abaixo:
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \draw[-latex] (`r -1.2*py$R`, 0) -- (`r 1.2*py$R`, 0) node[below] {$x$};
+    \draw[-latex] (0, `r -1.2*py$R`) -- (0, `r 1.2*py$R`) node[left] {$y$};
+    \draw[dashed] (0,0) circle (`r py$R`);
+    \draw[dashed] (`r py$x`, 0) node[below] {$x$} -- (`r py$x`, `r py$y`) -- (0, `r py$y`) node[left] {$y$};
+    \filldraw[fill=gray] (`r py$x`, `r py$y`) circle (5pt);
+    \draw[latex-latex] (`r py$R/3`, 0) arc (0:`r py$theta_deg`:`r py$R/3`) node[midway, right] {$\theta = \omega t$};
+    \draw[-latex, ultra thick, red] (0,0) -- (`r py$x`, `r py$y`) node[midway, left] {$\vet{r}$};
+    \draw[-latex, blue] (`r py$x`, `r py$y`) -- ++(`r py$vx`, `r py$vy`) node[midway, above] {$\vet{v}$};
+    \draw[-latex, thick, blue] (`r py$x`, `r py$y`) -- ++(`r py$ax`, `r py$ay`) node[midway, thick, right] {$\vet{a}$};
+  \end{tikzpicture}
+\end{figure}
+\noindent em que $x = R \cos{(\theta)}$ e $y = R \sin{(\theta)}$. Sabendo que um movimento com velocidade angular $\omega$ possui período $T = \dfrac{2\pi}{\omega}$, vale a seguinte relação:
+
+\begin{align*}
+  \dfrac{T}{2\pi} = \dfrac{\dfrac{2\pi}{\omega}}{2\pi} = \dfrac{t}{\theta} \Rightarrow \dfrac{1}{\omega} = \dfrac{t}{\theta} \Rightarrow \theta = \omega t
+\end{align*}
+
+Logo, a posição da partícula pode ser escrita como:
+
+$$
+\vet{r}(t) = \ux R \cos{(\omega t)} + \uy R \sin{(\omega t)}.
+$$
+
+A velocidade $\vet{v}(t)$ é 
+\begin{align*}
+\vet{v}(t) = \dfrac{d\vet{r}}{dt} &= \dfrac{d}{dt}\left[ \ux R \cos{(\omega t)} + \uy R \sin{(\omega t)}\right]\\
+  \vet{v}(t) &= - \ux \omega R \sin{(\omega t)} + \uy \omega R \cos{(\omega t)}
+\end{align*}
+
+e a aceleação $\vet{a}(t)$ é:
+
+\begin{align*}
+  \vet{a}(t) = \dfrac{d\vet{v}}{dt} &= \left[ - \ux \omega R \sin{(\omega t)} + \uy \omega R \cos{(\omega t)} \right]\\
+  \vet{a}(t) &= - \ux \omega^2 R\cos{(\omega t)} - \uy \omega^2 R \sin{(\omega t)}\\
+  \vet{a}(t) &= - \omega^2 \vet{r}(t)
+\end{align*}
+
+Como mostrado acima, a aceleração no movimento circular uniforme sempre aponta para o centro da trajetória. Por sua vez, podemos mostrar que o vetor velocidade $\vet{v}$ é sempre perpendicular ao vetor posição $\vet{r}$, em qualquer instante $t$. De fato, calculando o produto escalar entre esses vetores, obtemos:
+
+\begin{align*}
+\vet{r}(t) \cdot \vet{v}(t) &=  \left[ \ux R \cos{(\omega t)} + \uy R \sin{(\omega t)} \right] \cdot  \left[ - \ux \omega R \sin{(\omega t)} + \uy \omega R \cos{(\omega t)} \right]\\
+&= -\omega R^2 \cos{(\omega t)} \sin{(\omega t)} + \omega R^2 \cos{(\omega t)} \sin{(\omega t)} = 0
+\end{align*}
+  \fimSol
+  %%%%
+  \item A posição de uma partícula em mocimento é dada como função do tempo por $$\vet{r}(t) = \ux b \cos{(\omega t)} + \uy c \sin{(\omega t)},$$ onde $b$, $c$ e $\omega$ são constante. Descreva a órbita da partícula.\\
+  \iniSol
+    Sejam $x(t) = b \cos{(\omega t)}$ e $y(t) = c \sin{(\omega t)}$ as coordenadas da partícula no instante $t$. Observemos que, para todo ângulo $\phi$ vale a identidade trigonométrica:
+    \begin{align*}
+      \cos^2{(\phi}) + \sin^2{(\phi)} = 1.
+    \end{align*}
+    Então, fazendo $\phi = \omega t$, temos:
+    \begin{align*}
+      \cos^2{(\omega t}) + \sin^2{(\omega t)} = 1 &\Rightarrow \left(\dfrac{x}{b}\right)^2 + \left(\dfrac{y}{c}\right)^2 = 1\\
+      &\Rightarrow \dfrac{x^2}{b^2} + \dfrac{y^2}{c^2} = 1
+    \end{align*}
+    A equação acima descreve uma elipse no plano $xy$. O centro da elipse é a origem $O$ e os semi-eixos são respectivamente $b$ e $c$. A figura abaixo mostra a trajetória da partícula:
+```{python, include=FALSE}
+import math
+b = 4
+c = 2
+omega = math.pi/5
+t = 3/2
+x, y = b * math.cos(omega * t), c * math.sin(omega * t)
+vx, vy = -omega * b * math.sin(omega * t), omega * c * math.cos(omega * t)
+ax, ay = -omega**2 * x, -omega**2 * y
+theta = math.atan(y/x)
+theta_deg = math.degrees(theta) 
+```
+
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \draw[-latex] (`r -1.2*py$b`, 0) -- (`r 1.2*py$b`, 0) node[below] {$x$};
+    \draw[-latex] (0, `r -1.2*py$c`) -- (0, `r 1.2*py$c`) node[left] {$y$};
+    \draw[dashed] (0,0) ellipse (`r py$b` and `r py$c`);
+    \draw (`r py$b`, 2pt) -- ++(0, -4pt) node[below, fill=white] {$b$};
+    \draw (2pt, `r py$c`) -- ++(-4pt, 0) node[left, fill=white] {$c$};
+    \draw[dashed] (`r py$x`, 0) node[below] {$x$} -- (`r py$x`, `r py$y`) -- (0, `r py$y`) node[left] {$y$};
+    \filldraw[fill=gray] (`r py$x`, `r py$y`) circle (5pt);
+    \draw[latex-latex] (`r py$b/3`, 0) arc (0:`r py$theta_deg`:`r py$b/3`) node[midway, right] {$\theta$};
+    \draw[-latex, ultra thick, red] (0,0) -- (`r py$x`, `r py$y`) node[midway, left] {$\vet{r}$};
+    \draw[-latex, blue] (`r py$x`, `r py$y`) -- ++(`r py$vx`, `r py$vy`) node[midway, above] {$\vet{v}$};
+    \draw[-latex, thick, blue] (`r py$x`, `r py$y`) -- ++(`r py$ax`, `r py$ay`) node[midway, thick, right] {$\vet{a}$};
+  \end{tikzpicture}
+\end{figure}
+
+Observemos que:
+  \begin{align*}
+    r^2 = x^2 + y^2 &\Rightarrow r^2 = \left[b \cos{(\omega t)}\right]^2 + \left[c \sin{(\omega t)}\right]^2\\
+    &\Rightarrow r^2 = b^2 \cos^2{(\omega t)} + c^2 \sin^2{(\omega t)}\\
+    &\Rightarrow r^2 = b^2 \left[1 - \sin^2{(\omega t)}\right] + c^2 \sin^2{(\omega t)}\\
+    &\Rightarrow r^2 = b^2 - (b^2 - c^2)\sin^2{(\omega t)}\\
+    &\Rightarrow r^2 = \dfrac{b^2}{c^2} \left[1 - \left(1 - \dfrac{c^2}{b^2}\right) \sin^2{(\omega t)}\right]\\
+    &\Rightarrow r^2 = \dfrac{b^2}{c^2} \left[1 - e^2 \sin{(\omega t)}\right]
+  \end{align*}
+em que $e = \sqrt{1 - \dfrac{c^2}{b^2}}$ é a excentricidade da elipse.
+e
+  \begin{align*}
+    \theta &= \arctan{\left(\dfrac{y}{x}\right)} = \arctan{\left[\dfrac{c \sin{(\omega t)}}{b \cos{(\omega t)}}\right]}\\
+    \theta &= \arctan{\left[\dfrac{c}{b} \tan{(\omega t)}\right]}
+  \end{align*}
+  \fimSol
+  %%%%
+  \item A posição de uma partícula em movimento é dada como função do tempo por $$\vet{r}(t) = \ux b \cos{(\omega t)} + \uy c \sin{(\omega t)} + \uz v_0 t,$$ onde $b$, $c$, $v_0$ e $\omega$ são constantes. Descreva a órbita da partícula.\\
+  \iniSol
+    A partícula descreve uma \textit{hélice elíptica} que pode ser expressa de forma paramétrica como:
+    \begin{align*}
+      \begin{cases}
+        x(t) = b \cos{(\omega t)}\\
+        y(t) = c \sin{(\omega t)}\\
+        z(t) = v_0 t
+      \end{cases}
+    \end{align*}
+    A trajetória é mostrada na figura seguinte:
+```{python, include=FALSE}
+import math
+import numpy as np
+b, c, omega, v0 = 8, 3, math.pi/4, 0.4
+n = 151
+T = 2*math.pi/omega
+t = np.linspace(0, 2.5*T, n)
+x, y, z = b* np.cos(omega * t), c* np.sin(omega * t), v0*t
+vx, vy, vz = -omega * b * np.sin(omega * t), omega * c * np.cos(omega * t), v0
+ax, ay, az = -omega**2 * x, -omega**2 * y, 0
+
+zmax = max(z)
+
+helice = "\\draw[green!50!black, thick]"
+helice += " -- ".join([f"({x[i]:.3f}, {y[i]:.3f}, {z[i]:.3f})" for i in range(n)])
+helice += ";"
+
+elipse = "\\draw[dashed, fill=gray, fill opacity=0.1]"
+elipse += " -- ".join([f"({x[i]:.3f}, {y[i]:.3f}, 0)" for i in np.where(t <= T)[0]])
+elipse += ";"
+
+
+tp = 2.15*T
+xp, yp, zp = b* math.cos(omega * tp), c* math.sin(omega * tp), v0*tp
+vxp, vyp, vzp = -omega * b* math.cos(omega * tp), omega * c * math.cos(omega * tp), v0
+axp, ayp, azp = -omega**2 * xp, -omega**2 * yp, 0
+```
+    \begin{figure}[H]
+      \centering
+      \tdplotsetmaincoords{75}{105}
+      \begin{tikzpicture}[tdplot_main_coords]
+        `r py$elipse`
+        \draw (`r py$b`, 0.2, 0) -- (`r py$b`, -0.2, 0)  node[left, xshift=-5pt, yshift=-5pt] {$+b$};
+        \draw (`r -py$b`, 0.2, 0) -- (`r -py$b`, -0.2, 0)  node[left, xshift=5pt, yshift=5pt] {$-b$};
+        \draw (0.3, `r py$c`,  0) -- (-0.3, `r py$c`,  0)  node[below, xshift=5pt, yshift=-2pt] {$+c$};
+        \draw (0.3, `r -py$c`, 0) -- (-0.3, `r -py$c`, 0)  node[below, xshift=-20pt, yshift=2pt] {$-c$};
+        \draw[-latex] (`r -1.5*py$b`, 0, 0) -- (`r 1.5*py$b`, 0, 0) node[left] {$x$};
+        \draw[-latex] (0, `r -1.5*py$c`, 0) -- (0, `r 1.5*py$c`, 0) node[above] {$y$};
+        \draw[-latex] (0, 0, 0) -- (0, 0, `r 1.1*py$zmax`) node[left] {$z$};
+        `r py$helice`
+        \draw[dashed] (`r round(py$xp,2)`, `r round(py$yp, 2)`, `r round(py$zp, 2)`) -- (0, 0, `r round(py$zp, 2)`) node[left, yshift=5pt] {$z$};
+        \draw[dashed] (`r round(py$xp,2)`, `r round(py$yp, 2)`, `r round(py$zp, 2)`) -- (`r round(py$xp,2)`, `r round(py$yp, 2)`, 0) -- (`r round(py$xp,2)`, 0, 0) node[left] {$x$};
+        \draw[dashed] (`r round(py$xp,2)`, `r round(py$yp, 2)`, 0)  -- (0, `r round(py$yp, 2)`, 0) node[above, xshift=-5pt] {$y$};
+        \draw[dashed] (0,0,0) -- (`r round(py$xp,2)`, `r round(py$yp, 2)`, 0);
+        %%
+        \draw[-latex, thick, red] (0,0,0) -- (`r round(py$xp,2)`, `r round(py$yp, 2)`, `r round(py$zp, 2)`) node[right, midway] {$\vet{r}$};
+        \draw[-latex, thick, blue] (`r round(py$xp,2)`, `r round(py$yp, 2)`, `r round(py$zp, 2)`) --++(`r round(py$vxp,2)`, `r round(py$vyp, 2)`, `r round(py$vzp, 2)`) node[below, midway] {$\vet{v}$};
+        \draw[-latex, thick, blue] (`r round(py$xp,2)`, `r round(py$yp, 2)`, `r round(py$zp, 2)`) --++(`r round(py$axp,2)`, `r round(py$ayp, 2)`, `r round(py$azp, 2)`) node[above, midway] {$\vet{a}$};
+      \end{tikzpicture}
+    \end{figure}
+    Observemos que:
+    \begin{align*}
+      \vet{v}(t) &= \dfrac{d\vet{r}}{dt} = -\ux \omega b \sin{(\omega t)} + \uy \omega c \cos{(\omega t)} + \uz v_0\\
+      \vet{a}(t) &= \dfrac{d\vet{v}}{dt} = - \ux \omega^2 b \cos{(\omega t)} - \uy \omega^2 c \sin{(\omega t)}\\
+    \end{align*}
+  \fimSol
 \end{enumerate}
+
+ 
+
+
 
