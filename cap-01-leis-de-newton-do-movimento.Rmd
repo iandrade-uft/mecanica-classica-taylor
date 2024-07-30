@@ -542,9 +542,70 @@ axp, ayp, azp = -omega**2 * xp, -omega**2 * yp, 0
       \vet{a}(t) &= \dfrac{d\vet{v}}{dt} = - \ux \omega^2 b \cos{(\omega t)} - \uy \omega^2 c \sin{(\omega t)}\\
     \end{align*}
   \fimSol
+  %%%%
+  \item Seja $\vet{u}$ um vetor unitário fixo arbitrário e mostre que qualquer vetor $\vet{b}$ satisfaz 
+  $$
+  b^2 = (\vet{u}\cdot \vet{b})^2 + (\vet{u} \times \vet{b})^2.
+  $$
+  Explique esse resultado em palavras, com o auxílio de uma figura.\\
+  \iniSol
+    Sejam $\theta$ o ângulo entre os vetores $\vet{u}$ e $\vet{b}$, então:
+    \begin{align*}
+      \begin{cases}
+        |\vet{u} \cdot \vet{b}| &= u b \cos{\theta} = b\cos{\theta}\\
+        |\vet{u} \times \vet{b}| &= u b \sin{\theta} = b \sin{\theta}
+      \end{cases}
+      \Rightarrow (\vet{u}\cdot \vet{b})^2 + (\vet{u} \times \vet{b})^2
+      \Rightarrow (|\vet{u}\cdot \vet{b}|)^2 + (|\vet{u} \times \vet{b}|)^2 &= (b\cos{\theta})^2 + (b\cos{\theta})^2 \\
+      &= b^2 \cos^2{\theta} + b^2 \sin^2 {\theta}\\
+      &= b^2 (\cos^2{\theta} +  \sin^2 {\theta})\\
+      &= b^2
+    \end{align*}
+  \fimSol
+  %%%%
+  \item Mostre que para quaisquer dois vetores $\vet{a}$ e $\vet{b}$
+  $$
+  |\vet{a}+\vet{b}| \leq (a+b).
+  $$
+  [\textit{Sugestão}: expanda $|\vet{a}+\vet{b}|^2$ e compare o resultado com $(a+b)^2$]. Explique por que isso é chamado de desigualdade triangular.\\
+  \iniSol
+    Seja $\theta$ o ângulo entre os vetores $\vet{a}$ e $\vet{b}$. Façamos:
+    \begin{align*}
+      |\vet{a}+\vet{b}|^2 &= (\vet{a} + \vet{b}) \cdot (\vet{a} + \vet{b}) = \vet{a}\cdot{\vet{a}} + \vet{a}\cdot\vet{b} + \vet{b} \cdot \vet{a} + \vet{b} \cdot \vet{b}\\
+      &= \vet{a}\cdot{\vet{a}} + 2\vet{a}\cdot\vet{b} + \vet{b} \cdot \vet{b}\\
+      &= \vet{a}\cdot{\vet{a}} + \vet{b} \cdot \vet{b} + 2\vet{a}\cdot\vet{b}\\
+      &= a^2 + b^2 + 2ab \cos{\theta}
+    \end{align*}
+    Dado que $-1 \leq \cos{\theta} \leq 1$ para qualquer ângulo $\theta$, então
+    \begin{align*}
+      a^2 + b^2 - 2ab \leq |\vet{a}+\vet{b}|^2 \leq a^2 + b^2 + 2ab &\Rightarrow (a-b)^2 \leq |\vet{a}+\vet{b}|^2 \leq (a+b)^2\\
+      &\Rightarrow |a-b| \leq  |\vet{a}+\vet{b}| \leq |a+b|
+    \end{align*}
+    Em particular, demonstramos que $|\vet{a}+\vet{b}| \leq (a+b)$.\\
+    A fim de verificar o motivo pelo qual essa desigualdade é chamada \textit{desigualdade triangular}, consideremos o triângulo formado pelos vetores $\vet{a}$, $\vet{b}$ e $\vet{a}+\vet{b}$:
+```{r, include=FALSE}
+a <- c(5, 0)
+b <- c(2, 3)
+c <- a+b
+delta <- 20
+theta <- atan(b[2]/b[1]) * (180/pi)
+```
+    \begin{figure}[H]
+      \centering
+      \begin{tikzpicture}[rotate=`r delta`, scale=0.8]
+        \draw[dashed] (`r a`) -- (`r 2*a`);
+        \draw[dashed] (`r a + c(b[1],0)`) -- ++(0, `r b[2]`);
+        \draw[-latex] (0, 0) -- (`r a`) node[below, midway] {$\vet{a}$};
+        \draw[-latex] (`r a`) -- ++(`r b`) node[left, midway] {$\vet{b}$};
+        \draw[-latex] (0, 0) -- (`r c`) node[above, midway, rotate=`r delta + (180/pi)*atan(c[2]/c[1])`] {$\vet{a}+\vet{b}$};
+        \draw[latex-latex] (`r a`) ++ (1,0) arc (0:`r theta`:1) node[midway, right, rotate=`r delta`] {$\theta$};
+      \end{tikzpicture}
+    \end{figure}
+    De acordo com a figura acima, temos:
+    $$
+    |\vet{a} + \vet{b}| = |\vet{a}| + |\vet{b}|\cos{\theta} = a + b\cos{\theta} \leq a+ b
+    $$
+  \fimSol
 \end{enumerate}
 
  
-
-
-
