@@ -655,14 +655,7 @@ rs <- sqrt(sum(r^2)) * sqrt(sum(s^2)) * sin(theta)
         \draw[-latex, thick, blue] (0,0,0) -- (0, 0, `r rs`) node[midway, right] {$\vet{r} \times \vet{s}$};
       \end{tikzpicture}
     \end{figure}
-
-
-  \fimSol
-\end{enumerate}
-
-
-    
-```{r}
+```{r, include=FALSE}
 set.seed(123)
 x <- -5:5
 r <- sample(x=x, size=3, replace=TRUE) 
@@ -697,17 +690,69 @@ p2 <- 0.7 * p2 / sqrt(sum(p2^2))
 p3 <- p1 + p2
 ```
 
+A próxima figura ilustra o caso geral com dois vetores arbitrários $\vet{r}$ e $vet{s}$:
+
 \begin{figure}[H]
   \centering
   \tdplotsetmaincoords{60}{125}
   \begin{tikzpicture}[tdplot_main_coords]
     \filldraw[gray, fill opacity=0.1] (`r -0.2*(r+s)`) -- ++(`r 1.4*r`) --  ++(`r 1.4*s`) -- ++(`r -1.4*r`) -- ++(`r -1.4*s`) -- cycle;
     \draw[-latex, thick, blue] (0,0,0) -- (`r r `) node[above]{$\vet{r}$};
-    \draw[-latex, thick, blue] (0,0,0) -- (`r s `) node[above]{$\vet{s}$};
+    \draw[-latex, thick, green!50!black] (0,0,0) -- (`r s `) node[above]{$\vet{s}$};
     \draw[-latex, thick, red] (0,0,0) -- (`r rs `) node[below]{$\vet{r} \times \vet{s}$};
     \filldraw[gray, fill opacity=0.5] (0,0,0) -- (`r p1`) -- (`r p3`) -- (`r p2`);
     \filldraw[gray!80!black] (`r p3 * 0.5`) circle (2pt);
     `r arc`
   \end{tikzpicture}
 \end{figure}
+
+  \fimSol
+  %%%%
+  \item 
+  \begin{enumerate}[label=(\alph*)]
+    \item Definindo o produto escalar $\vet{r} \cdot \vet{s}$ pela Equação (1.7), $\vet{r} \cdot \vet{s} = \sum r_i s_i$, mostre que o teorema de Pitágoras implica que a magnitude de qualquer vetor $\vet{r}$ é $r = \sqrt{\vet{r} \cdot \vet{r}}$.\\
+    \iniSol
+      Consideremos o vetor $\vet{r}$ da figura seguinte:
+      \begin{figure}[H]
+        \centering
+        \tdplotsetmaincoords{60}{125}
+        \begin{tikzpicture}[tdplot_main_coords]
+          \draw[-latex] (0,0,0) -- (5, 0, 0) node[left] {$x$};
+          \draw[-latex] (0,0,0) -- (0, 5, 0) node[above] {$y$};
+          \draw[-latex] (0,0,0) -- (0, 0, 5) node[left] {$z$};
+          \filldraw (0,0,0) circle (1.5pt) node[left] {$O$};
+          \filldraw (2,0,0) circle (1.5pt) node[below] {$A$};
+          \filldraw (2,3,4) circle (1.5pt) node[above] {$P$};
+          \filldraw (2,3,0) circle (1.5pt) node[below] {$P^\prime$};
+          \draw[dashed] (2, 0,0) node[left] {$r_x$} -- (2,3,0) -- (0, 3, 0) node[above] {$r_y$};
+          \draw[dashed] (0,0,0) -- (2, 3, 0) -- (2, 3, 4) -- (0, 0, 4) node[left] {$r_z$};
+          \draw[-latex, thick, red] (0,0,0) -- (2, 3, 4) node[midway, above] {$\vet{r}$};
+        \end{tikzpicture}
+      \end{figure}
+      Aplicando o teorema de Pitágoras aos triângulos $OAP^\prime$ e $OP^\prime P$, retos em $A$ e $P^\prime$, respectivamente, temos:
+      \begin{align*}
+        \begin{cases}
+          \overline{OP^\prime}^2 = \overline{OA}^2 + \overline{AP^\prime}^2\\
+          \overline{OP}^2 = \overline{OP^\prime}^2 + \overline{P^\prime P}^2
+        \end{cases}
+        &\Rightarrow
+        \begin{cases}
+          \overline{OP^\prime}^2 = r_x^2 + r_y^2\\
+          \overline{OP}^2 = \overline{OP^\prime}^2 + r_z^2
+        \end{cases}
+        \\
+        &\Rightarrow r^2 = \overline{OP}^2 r_x^2 + r_y^2 + r_z^2 \\
+        & \Rightarrow r^2 = (\ux r_x + \uy r_y + \uz r_z) \cdot (\ux r_x + \uy r_y + \uz r_z)\\
+        & \Rightarrow r^2 = \vet{r} \cdot \vet{r}\\
+        & \Rightarrow r^2 = \sqrt{\vet{r} \cdot \vet{r}}
+      \end{align*}
+    \fimSol
+    %%
+    \item Está claro que o comprimento de um vetor não depende da escolha dos eixos coordenados. Logo, o resultado do item (a) garante que o produto escalar $\vet{r} \cdot \vet{r}$, como definido em (1.7), é o mesmo para quaçquer escolha de eixos ortogonais. Use isso para mostrar que $\vet{r} \cdot \vet{s}$, como definido em (1.7), é o mesmo para qualquer escolha de eixos ortogonais. [\textit{Sugestão}: cnsidere o comprimento do vetor $\vet{r} + \vet{s}$.]
+  \end{enumerate}
+\end{enumerate}
+
+
+    
+
  
