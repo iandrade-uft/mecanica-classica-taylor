@@ -606,6 +606,108 @@ theta <- atan(b[2]/b[1]) * (180/pi)
     |\vet{a} + \vet{b}| = |\vet{a}| + |\vet{b}|\cos{\theta} = a + b\cos{\theta} \leq a+ b
     $$
   \fimSol
+  %%%%
+  \item Mostre que a definição (1.9) do produto vetorial é equivalente à definição elementar em que $\vet{r} \times \vet{s}$ é perpendicular a ambos, com magnitude $r s \sin{\theta}$ e a direção dada pela regra da mão direita. [\textit{Sugestão}: é fato que (embora bastante difícil de provar) a definição (1.9) é independente da nossa escolha de eixos. Portanto, você pode escolher eixos de forma que $\vet{r}$ aponte ao longo do eixo $x$ e $\vet{s}$ esteja sobre o plano $xy$.]\\
+  \iniSol
+    Sem perda de generalidade, tomemos os vetores $\vet{r} = r \ux$ e $\vet{s} = \ux s \cos{\theta} + \uy r \sin{\theta}$, em que $\theta$ é o ângulo entre $\vet{r}$ e $\vet{s}$. Então, aplicando a definição (1.9), temos:
+    \begin{align*}
+      \vet{r} \times \vet{s} &= 
+      \begin{vmatrix}
+        \ux & \uy & \uz\\
+        r & 0 & 0\\
+        s\cos{\theta} & s \sin{\theta} & 0
+      \end{vmatrix}
+      = \ux \begin{vmatrix}
+        0 & 0\\
+        s\sin{\theta} & 0
+      \end{vmatrix}
+      - \uy \begin{vmatrix}
+        r & 0\\
+        s \cos{\theta} & 0
+      \end{vmatrix}
+      + \uz \begin{vmatrix}
+        r & 0\\
+        s \cos{\theta} & s \sin{\theta}
+      \end{vmatrix}
+      \\
+      &= \ux (0 \cdot 0 - 0 \cdot s \sin{\theta}) - \uy (r \cdot 0 - 0 \cdot s \cos{\theta}) + \uz (r \cdot s \sin{\theta} - 0 \cdot s \cos{\theta})\\
+      &= \uz r s \sin{\theta}
+    \end{align*}
+    A figura a seguir ilustra o resultado acima:
+```{r, include=FALSE}
+r <- c(3, 0, 0)
+s <- c(1, 2, 0)
+theta <- atan(s[2]/s[1])
+theta_deg <- theta * (180/pi)
+rs <- sqrt(sum(r^2)) * sqrt(sum(s^2)) * sin(theta)
+```
+
+    \begin{figure}[H]
+      \centering
+      \tdplotsetmaincoords{60}{125}
+      \begin{tikzpicture}[tdplot_main_coords]
+        \draw[-latex] (0,0,0) -- (5, 0, 0) node[left] {$x$};
+        \draw[-latex] (0,0,0) -- (0, 5, 0) node[above] {$y$};
+        \draw[-latex] (0,0,0) -- (0, 0, 7) node[left] {$z$};
+        \draw[-latex, thick, blue] (0,0,0) -- (`r r`) node[left, midway] {$\vet{r}$};
+        \draw[-latex, thick, blue] (0,0,0) -- (`r s`) node[right, midway] {$\vet{s}$};
+        \draw[latex-latex] (1, 0) arc (0:`r theta_deg`:1) node [midway, below] {$\theta$};
+        \draw[-latex, thick, blue] (0,0,0) -- (0, 0, `r rs`) node[midway, right] {$\vet{r} \times \vet{s}$};
+      \end{tikzpicture}
+    \end{figure}
+
+
+  \fimSol
 \end{enumerate}
 
+
+    
+```{r}
+set.seed(123)
+x <- -5:5
+r <- sample(x=x, size=3, replace=TRUE) 
+r <- r * (4/sqrt(sum(r^2)))
+s <- sample(x=x, size=3, replace=TRUE) 
+s <- s * (4/sqrt(sum(s^2)))
+
+rs <- c(
+  r[2]*s[3] - r[3]*s[2],
+  r[3]*s[1] - r[1]*s[3],
+  r[1]*s[2] - r[2]*s[1]
+)
+
+n <- 21
+p <- seq(from=0, to=1, length=n)
+a <- r 
+a <- a/sqrt(sum(a^2)) * (3/2)
+arc <- sprintf("\\draw[latex-latex] (%.4f, %.4f, %.4f)", a[1], a[2], a[3])
+for (i in 2:n) {
+  a <- (1-p[i])*r+ p[i]*s
+  a <- a/sqrt(sum(a^2)) * (3/2) 
+  arc <- sprintf("%s -- (%.4f, %.4f, %.4f)", arc, a[1], a[2], a[3])
+}
+a <- r+s
+a <- a/sqrt(sum(a^2)) *(3/2)
+arc <- sprintf("%s;\\node[above] at (%.4f, %.4f, %.4f) {$\\theta$};", arc, a[1], a[2], a[3])
+
+p1 <- r+s
+p1 <- 0.7 * p1 / sqrt(sum(p1^2))
+p2 <- rs
+p2 <- 0.7 * p2 / sqrt(sum(p2^2))
+p3 <- p1 + p2
+```
+
+\begin{figure}[H]
+  \centering
+  \tdplotsetmaincoords{60}{125}
+  \begin{tikzpicture}[tdplot_main_coords]
+    \filldraw[gray, fill opacity=0.1] (`r -0.2*(r+s)`) -- ++(`r 1.4*r`) --  ++(`r 1.4*s`) -- ++(`r -1.4*r`) -- ++(`r -1.4*s`) -- cycle;
+    \draw[-latex, thick, blue] (0,0,0) -- (`r r `) node[above]{$\vet{r}$};
+    \draw[-latex, thick, blue] (0,0,0) -- (`r s `) node[above]{$\vet{s}$};
+    \draw[-latex, thick, red] (0,0,0) -- (`r rs `) node[below]{$\vet{r} \times \vet{s}$};
+    \filldraw[gray, fill opacity=0.5] (0,0,0) -- (`r p1`) -- (`r p3`) -- (`r p2`);
+    \filldraw[gray!80!black] (`r p3 * 0.5`) circle (2pt);
+    `r arc`
+  \end{tikzpicture}
+\end{figure}
  
