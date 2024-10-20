@@ -750,6 +750,15 @@ A próxima figura ilustra o caso geral com dois vetores arbitrários $\vet{r}$ e
     %%
     \item Está claro que o comprimento de um vetor não depende da escolha dos eixos coordenados. Logo, o resultado do item (a) garante que o produto escalar $\vet{r} \cdot \vet{r}$, como definido em (1.7), é o mesmo para quaçquer escolha de eixos ortogonais. Use isso para mostrar que $\vet{r} \cdot \vet{s}$, como definido em (1.7), é o mesmo para qualquer escolha de eixos ortogonais. [\textit{Sugestão}: cnsidere o comprimento do vetor $\vet{r} + \vet{s}$.]
   \end{enumerate}
+  %%%%
+  \item 
+  \begin{enumerate}
+    \item Mostre que o produto vetorial $\vet{r} \times \vet{s}$, como definido em (1.9), é distributivo, isto é, que $\vet{r} \times (\vet{u} + \vet{v}) = (\vet{r} \times \vet{u}) + (\vet{r} + \vet{v})$.
+    \item Mostre  a regra do produto
+    $$
+    \vet{r}
+    $$
+  \end{enumerate}
 \end{enumerate}
 
 
